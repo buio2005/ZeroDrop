@@ -1,5 +1,7 @@
 # 🛡️ ZeroDrop - Condivisione File Zero-Knowledge
 
+![Preview](assets/zerodrop.png)
+
 **ZeroDrop** è uno strumento di trasferimento file open-source progettato per garantire la massima privacy e sicurezza. Creato da [TivuStream](https://tivustream.com), segue la filosofia "Privacy First" utilizzando crittografia end-to-end (E2EE) direttamente nel browser dell'utente.
 
 ## 🌟 Caratteristiche Principali
