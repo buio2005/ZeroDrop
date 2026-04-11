@@ -8,6 +8,7 @@
 -   **Zero-Knowledge**: Il server riceve solo dati cifrati (blob) e non ha alcuna conoscenza del contenuto, del nome o del tipo di file.
 -   **Autodistruzione**: I file vengono eliminati dal server immediatamente dopo il primo download o dopo 24 ore di inattività.
 -   **Privacy-Focused**: Nessun log degli indirizzi IP, nessun cookie di tracciamento e nessuna registrazione richiesta.
+-   **Rate Limiting**: Protezione integrata contro gli abusi (max 5 upload ogni 10 minuti per utente, basato su hash IP anonimizzato).
 -   **Interfaccia Moderna**: Design "Dark Glass" pulito e intuitivo, ottimizzato per desktop e mobile.
 -   **Compatibilità**: Funziona su qualsiasi hosting con supporto PHP (anche hosting condivisi).
 
