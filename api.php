@@ -91,6 +91,20 @@ switch ($action) {
         }
 
         $file = $_FILES['file'];
+        
+        // 2. MIME Validation (Sicurezza)
+        // Anche se i file sono criptati, verifichiamo che non vengano inviati file potenzialmente pericolosi 
+        // che l'hosting potrebbe interpretare se mal configurato.
+        $allowed_extensions = ['jpg', 'jpeg', 'png', 'gif', 'pdf', 'doc', 'docx', 'xls', 'xlsx', 'zip', '7z', 'rar', 'mp4', 'mp3', 'txt', 'mov', 'wav', 'heic', 'psd'];
+        $file_info = pathinfo($_POST['name'] ?? '');
+        $extension = strtolower($file_info['extension'] ?? '');
+
+        if (!in_array($extension, $allowed_extensions)) {
+            http_response_code(403);
+            echo json_encode(['error' => 'Estensione file non consentita per motivi di sicurezza.']);
+            break;
+        }
+
         if ($file['size'] > $max_file_size) {
             http_response_code(413);
             echo json_encode(['error' => 'File troppo grande (max 100MB)']);
