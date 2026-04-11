@@ -1,0 +1,5 @@
+uploads/
+*.log
+.DS_Store
+Thumbs.db
+config.local.php

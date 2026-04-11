@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZeroDrop - Condividi in Sicurezza</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { 
+            background: radial-gradient(circle at top, #0f172a, #020617); 
+            color: #e2e8f0; 
+        } 
+        
+        /* Dropzone */ 
+        .drop-zone { 
+            border: 2px dashed rgba(255,255,255,0.1); 
+            transition: all 0.3s; 
+        } 
+        .drop-zone.active { 
+            border-color: #00ff9f; 
+            background: rgba(0,255,159,0.05); 
+        } 
+        
+        /* Card glass */ 
+        .card-dark { 
+            background: rgba(15, 23, 42, 0.7); 
+            backdrop-filter: blur(12px); 
+            border: 1px solid rgba(255,255,255,0.05); 
+        } 
+        
+        /* Gradient */ 
+        .gradient-text { 
+            background: linear-gradient(90deg, #00ff9f, #38bdf8); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+        } 
+        
+        /* Button */ 
+        .btn-main { 
+            background: linear-gradient(90deg, #00ff9f, #00d4ff); 
+            color: black; 
+        } 
+        .btn-main:hover { 
+            opacity: 0.9; 
+        } 
+        
+        .feature-box { 
+            background: rgba(15, 23, 42, 0.6); 
+            border: 1px solid rgba(255,255,255,0.05); 
+            backdrop-filter: blur(10px); 
+            transition: 0.2s; 
+        } 
+        
+        .feature-box:hover { 
+            transform: translateY(-3px); 
+            border-color: rgba(0,255,159,0.3); 
+        } 
+        
+        /* Loader */ 
+        #loading { display: none; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center p-4 font-sans">
+
+    <div class="max-w-xl w-full my-auto">
+        <!-- Logo Header -->
+        <div class="text-center mb-10">
+            <a href="/" class="inline-block group">
+                <img src="logo-tivustream.png" alt="TivuStream" class="h-14 mx-auto mb-3 drop-shadow-[0_0_15px_rgba(0,255,159,0.3)] transition-transform group-hover:scale-105" onerror="this.style.display='none'; document.getElementById('fallback-logo').style.display='flex'">
+                <div id="fallback-logo" class="hidden btn-main w-14 h-14 rounded-2xl items-center justify-center mx-auto mb-3 shadow-[0_0_20px_rgba(0,255,159,0.4)]">
+                    <i data-lucide="shield-check" class="text-black w-9 h-9"></i>
+                </div>
+            </a> 
+            <h1 class="text-3xl font-black tracking-tighter uppercase italic">Zero<span class="gradient-text text-shadow-glow">Drop</span></h1>
+            <p class="text-slate-400 text-xs font-bold uppercase tracking-[0.3em] mt-2">Privacy First - Zero Knowledge</p>
+        </div>
+
+        <!-- Main App Card -->
+        <div class="card-dark rounded-[2.5rem] shadow-2xl p-8 mb-8">
+            <!-- Upload View -->
+            <div id="upload-view" class="space-y-6">
+                <div id="drop-zone" class="drop-zone rounded-3xl p-12 text-center cursor-pointer hover:bg-white/5 group transition-all duration-500">
+                    <input type="file" id="file-input" class="hidden">
+                    <div class="flex flex-col items-center">
+                        <div class="w-20 h-20 bg-[#00ff9f]/10 rounded-3xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-500 shadow-[0_0_30px_rgba(0,255,159,0.1)]">
+                            <i data-lucide="upload-cloud" class="text-[#00ff9f] w-12 h-12 drop-shadow-[0_0_10px_rgba(0,255,159,0.5)]"></i>
+                        </div>
+                        <p class="text-slate-200 text-xl font-bold tracking-tight">Carica un file</p>
+                        <p class="text-slate-500 text-sm mt-1">Trascina qui o clicca per sfogliare</p>
+                        <div class="mt-5 flex items-center gap-2 px-4 py-1.5 bg-amber-500/10 text-amber-400 rounded-full text-[10px] font-black uppercase tracking-widest border border-amber-500/20">
+                            <i data-lucide="alert-circle" class="w-3.5 h-3.5"></i> Max 100MB
+                        </div>
+                    </div>
+                </div>
+
+                <div id="loading" class="text-center py-12">
+                    <div class="inline-block animate-spin rounded-full h-12 w-12 border-[3px] border-[#00ff9f] border-t-transparent shadow-[0_0_15px_rgba(0,255,159,0.3)]"></div>
+                    <p class="text-base text-slate-300 mt-5 font-bold tracking-tight" id="status-text">Criptando con AES-256...</p>
+                </div>
+
+                <!-- Result Link -->
+                <div id="result-link" class="hidden space-y-5 animate-in fade-in zoom-in duration-500">
+                    <div class="bg-[#00ff9f]/5 border border-[#00ff9f]/20 rounded-2xl p-5 flex items-start gap-4 shadow-[0_0_20px_rgba(0,255,159,0.05)]">
+                        <i data-lucide="check-circle" class="text-[#00ff9f] w-6 h-6 mt-0.5"></i>
+                        <div>
+                            <p class="text-[#00ff9f] font-bold text-sm">Pronto per la condivisione!</p>
+                            <p class="text-slate-400 text-xs mt-1">Il file è stato criptato con successo nel tuo browser.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-2.5">
+                        <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Link di download unico</label>
+                        <div class="flex gap-3">
+                            <input type="text" id="share-url" readonly class="flex-1 bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-sm text-[#00ff9f] font-medium focus:outline-none focus:border-[#00ff9f]/30 transition-colors">
+                            <button onclick="copyLink()" class="btn-main text-black px-6 rounded-2xl hover:scale-105 transition-all active:scale-95 shadow-[0_0_20px_rgba(0,255,159,0.2)]">
+                                <i data-lucide="copy" class="w-6 h-6"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-rose-500/5 border border-rose-500/20 rounded-2xl p-4 text-center">
+                        <p class="text-[10px] text-rose-400 font-black uppercase tracking-widest">
+                            <i data-lucide="zap" class="w-3.5 h-3.5 inline mr-1.5 align-text-bottom"></i> 
+                            Il file verrà eliminato subito dopo il download!
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Download View -->
+            <div id="download-view" class="hidden space-y-8 text-center py-4">
+                <div class="bg-white/5 rounded-[2rem] p-10 border border-white/10 shadow-inner">
+                    <div class="bg-rose-500/10 w-20 h-20 rounded-[2rem] flex items-center justify-center mx-auto mb-6 shadow-[0_0_30px_rgba(244,63,94,0.1)]">
+                        <i data-lucide="file-lock" class="text-rose-500 w-10 h-10 drop-shadow-[0_0_8px_rgba(244,63,94,0.5)]"></i>
+                    </div>
+                    <h3 id="file-name" class="font-bold text-2xl text-white tracking-tight truncate px-4">File protetto</h3>
+                    <p id="file-size" class="text-slate-500 mt-2 font-bold uppercase tracking-widest text-[11px]">-</p>
+                </div>
+                <button id="download-btn" class="w-full btn-main py-5 rounded-[2rem] font-black text-lg hover:scale-[1.02] transition-all shadow-[0_0_30px_rgba(0,255,159,0.3)] flex items-center justify-center gap-4 active:scale-[0.98]">
+                    <i data-lucide="unlock" class="w-7 h-7"></i> Decripta e Scarica
+                </button>
+                <p class="text-[10px] text-slate-500 italic font-medium">Operazione locale: la chiave non esce dal dispositivo verso il server.</p>
+            </div>
+        </div>
+
+        <!-- Info Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-16">
+            <div class="feature-box p-7 rounded-[2rem] group">
+                <div class="flex items-center gap-4 mb-3">
+                    <div class="p-2.5 bg-[#00ff9f]/10 rounded-xl group-hover:scale-110 transition-transform">
+                        <i data-lucide="binary" class="w-5 h-5 text-[#00ff9f]"></i>
+                    </div>
+                    <h3 class="font-black text-slate-200 text-sm tracking-widest uppercase">Crittografia E2EE</h3>
+                </div>
+                <p class="text-xs text-slate-500 leading-relaxed font-medium">I file vengono criptati con AES-256-GCM direttamente sul tuo dispositivo. La chiave non lascia mai il browser.</p>
+            </div>
+            <div class="feature-box p-7 rounded-[2rem] group">
+                <div class="flex items-center gap-4 mb-3">
+                    <div class="p-2.5 bg-[#00ff9f]/10 rounded-xl group-hover:scale-110 transition-transform">
+                        <i data-lucide="ghost" class="w-5 h-5 text-[#00ff9f]"></i>
+                    </div>
+                    <h3 class="font-black text-slate-200 text-sm tracking-widest uppercase">Zero-Knowledge</h3>
+                </div>
+                <p class="text-xs text-slate-500 leading-relaxed font-medium">Il server riceve solo dati cifrati. Non conosce il contenuto, il nome o il tipo di file inviato.</p>
+            </div>
+            <div class="feature-box p-7 rounded-[2rem] group">
+                <div class="flex items-center gap-4 mb-3">
+                    <div class="p-2.5 bg-[#00ff9f]/10 rounded-xl group-hover:scale-110 transition-transform">
+                        <i data-lucide="trash-2" class="w-5 h-5 text-[#00ff9f]"></i>
+                    </div>
+                    <h3 class="font-black text-slate-200 text-sm tracking-widest uppercase">Autodistruzione</h3>
+                </div>
+                <p class="text-xs text-slate-500 leading-relaxed font-medium">Dati effimeri: eliminazione immediata post-download o dopo 24 ore di inattività sul server.</p>
+            </div>
+            <div class="feature-box p-7 rounded-[2rem] group">
+                <div class="flex items-center gap-4 mb-3">
+                    <div class="p-2.5 bg-[#00ff9f]/10 rounded-xl group-hover:scale-110 transition-transform">
+                        <i data-lucide="eye-off" class="w-5 h-5 text-[#00ff9f]"></i>
+                    </div>
+                    <h3 class="font-black text-slate-200 text-sm tracking-widest uppercase">No Tracciamento</h3>
+                </div>
+                <p class="text-xs text-slate-500 leading-relaxed font-medium">Nessun cookie di profilazione e nessun log dell'indirizzo IP. La tua privacy è garantita al 100%.</p>
+            </div>
+        </div>
+
+        <!-- Footer Links -->
+        <footer class="text-center space-y-8 pb-10">
+            <div class="flex flex-wrap justify-center gap-x-10 gap-y-4">
+                <a href="/" class="text-[10px] font-black text-slate-500 hover:text-[#00ff9f] uppercase tracking-[0.2em] transition-all">Home</a>
+                <a href="/privacy.html" class="text-[10px] font-black text-slate-500 hover:text-[#00ff9f] uppercase tracking-[0.2em] transition-all">Privacy</a>
+                <a href="/tos.html" class="text-[10px] font-black text-slate-500 hover:text-[#00ff9f] uppercase tracking-[0.2em] transition-all">ToS</a>
+                <a href="/contatti" class="text-[10px] font-black text-slate-500 hover:text-[#00ff9f] uppercase tracking-[0.2em] transition-all">Contatti</a>
+            </div>
+            <div class="pt-8 border-t border-white/5">
+                <p class="text-[9px] text-slate-500 font-bold tracking-[0.3em] uppercase">
+                    ZeroDrop è un Progetto <a href="https://tivustream.com" class="text-[#00ff9f] hover:underline shadow-glow">TivuStream</a> - Privacy First System
+                </p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        const apiEndpoint = 'api.php';
+        const uploadView = document.getElementById('upload-view');
+        const downloadView = document.getElementById('download-view');
+        const dropZone = document.getElementById('drop-zone');
+        const fileInput = document.getElementById('file-input');
+        const loading = document.getElementById('loading');
+        const statusText = document.getElementById('status-text');
+        const resultLink = document.getElementById('result-link');
+        const shareUrl = document.getElementById('share-url');
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const fileId = urlParams.get('id');
+        const encryptionKey = window.location.hash.substring(1);
+
+        if (fileId && encryptionKey) {
+            showDownloadView(fileId, encryptionKey);
+        }
+
+        dropZone.onclick = () => fileInput.click();
+        fileInput.onchange = (e) => handleFile(e.target.files[0]);
+        dropZone.ondragover = (e) => { e.preventDefault(); dropZone.classList.add('active'); };
+        dropZone.ondragleave = () => dropZone.classList.remove('active');
+        dropZone.ondrop = (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('active');
+            handleFile(e.dataTransfer.files[0]);
+        };
+
+        async function handleFile(file) {
+            if (!file) return;
+            if (file.size > 100 * 1024 * 1024) {
+                alert("Il file supera il limite di 100MB consentito da Cloudflare.");
+                return;
+            }
+            dropZone.classList.add('hidden');
+            loading.style.display = 'block';
+            
+            try {
+                statusText.innerText = "Generazione chiave AES-256...";
+                const key = await crypto.subtle.generateKey({ name: "AES-GCM", length: 256 }, true, ["encrypt", "decrypt"]);
+                const exportedKey = await crypto.subtle.exportKey("jwk", key);
+                const keyBase64 = btoa(JSON.stringify(exportedKey));
+
+                statusText.innerText = "Criptando il file localmente...";
+                const iv = crypto.getRandomValues(new Uint8Array(12));
+                const fileBuffer = await file.arrayBuffer();
+                const encryptedBuffer = await crypto.subtle.encrypt({ name: "AES-GCM", iv: iv }, key, fileBuffer);
+
+                const payload = new Blob([iv, new Uint8Array(encryptedBuffer)]);
+                const formData = new FormData();
+                formData.append('file', payload);
+                formData.append('name', file.name);
+                formData.append('type', file.type);
+
+                statusText.innerText = "Caricamento in corso...";
+                const res = await fetch(`${apiEndpoint}?action=upload`, { method: 'POST', body: formData });
+                const text = await res.text();
+                
+                let data;
+                try {
+                    data = JSON.parse(text);
+                } catch (e) {
+                    console.error("Server response was not JSON:", text);
+                    throw new Error("Il server ha risposto in modo non valido. Verifica i permessi della cartella 'uploads'.");
+                }
+
+                if (data.id) {
+                    loading.style.display = 'none';
+                    resultLink.classList.remove('hidden');
+                    const finalLink = `${window.location.origin}${window.location.pathname}?id=${data.id}#${keyBase64}`;
+                    shareUrl.value = finalLink;
+                } else {
+                    throw new Error(data.error || "Errore upload");
+                }
+            } catch (err) {
+                alert("Errore: " + err.message);
+                dropZone.classList.remove('hidden');
+                loading.style.display = 'none';
+            }
+        }
+
+        function copyLink() {
+            shareUrl.select();
+            document.execCommand('copy');
+            alert("Link sicuro copiato!");
+        }
+
+        async function showDownloadView(id, keyBase64) {
+            uploadView.classList.add('hidden');
+            downloadView.classList.remove('hidden');
+            
+            try {
+                const res = await fetch(`${apiEndpoint}?action=info&id=${id}`);
+                const text = await res.text();
+                let info;
+                try {
+                    info = JSON.parse(text);
+                } catch(e) {
+                    console.error("Info response error:", text);
+                    throw new Error("File scaduto o errore server.");
+                }
+                
+                if (info.error) throw new Error(info.error);
+                document.getElementById('file-name').innerText = info.name;
+                document.getElementById('file-size').innerText = (info.size / 1024 / 1024).toFixed(2) + " MB";
+                document.getElementById('download-btn').onclick = () => downloadAndDecrypt(id, keyBase64, info.name);
+            } catch (err) {
+                alert("File scaduto o già scaricato.");
+                window.location.href = window.location.pathname;
+            }
+        }
+
+        async function downloadAndDecrypt(id, keyBase64, originalName) {
+            const btn = document.getElementById('download-btn');
+            btn.disabled = true;
+            btn.innerText = "Scaricamento...";
+
+            try {
+                const res = await fetch(`${apiEndpoint}?action=download&id=${id}`);
+                if (!res.ok) throw new Error("File non disponibile");
+                const buffer = await res.arrayBuffer();
+                const iv = buffer.slice(0, 12);
+                const data = buffer.slice(12);
+                const keyData = JSON.parse(atob(keyBase64));
+                const key = await crypto.subtle.importKey("jwk", keyData, { name: "AES-GCM" }, true, ["decrypt"]);
+                const decryptedBuffer = await crypto.subtle.decrypt({ name: "AES-GCM", iv: iv }, key, data);
+                const blob = new Blob([decryptedBuffer]);
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = originalName;
+                a.click();
+                btn.innerText = "Completato!";
+                setTimeout(() => window.location.href = window.location.pathname, 2000);
+            } catch (err) {
+                alert("Errore decrittografia.");
+                window.location.href = window.location.pathname;
+            }
+        }
+    </script>
+</body>
+</html>
