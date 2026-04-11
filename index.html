@@ -65,15 +65,31 @@
 
     <div class="max-w-xl w-full my-auto">
         <!-- Logo Header -->
-        <div class="text-center mb-10">
-            <a href="/" class="inline-block group">
-                <img src="logo-tivustream.png" alt="TivuStream" class="h-14 mx-auto mb-3 drop-shadow-[0_0_15px_rgba(0,255,159,0.3)] transition-transform group-hover:scale-105" onerror="this.style.display='none'; document.getElementById('fallback-logo').style.display='flex'">
-                <div id="fallback-logo" class="hidden btn-main w-14 h-14 rounded-2xl items-center justify-center mx-auto mb-3 shadow-[0_0_20px_rgba(0,255,159,0.4)]">
-                    <i data-lucide="shield-check" class="text-black w-9 h-9"></i>
+        <div class="text-center mb-12">
+            <a href="/" class="inline-block group no-underline">
+                <!-- Logo con effetto aura -->
+                <div class="relative w-20 h-20 mx-auto mb-6">
+                    <div class="absolute inset-0 bg-[#00ff9f]/20 rounded-full blur-2xl group-hover:bg-[#00ff9f]/40 transition-all duration-700 animate-pulse"></div>
+                    <div class="relative w-full h-full rounded-full border border-white/10 p-0.5 backdrop-blur-sm bg-slate-900/50 shadow-[0_0_30px_rgba(0,255,159,0.15)] group-hover:shadow-[0_0_40px_rgba(0,255,159,0.3)] transition-all duration-500">
+                        <img src="logo-tivustream.png" alt="ZeroDrop" 
+                             class="w-full h-full object-contain rounded-full transition-transform duration-700 group-hover:rotate-[360deg]" 
+                             onerror="this.style.display='none'; document.getElementById('fallback-logo').style.display='flex'">
+                        <div id="fallback-logo" class="hidden w-full h-full rounded-full items-center justify-center bg-slate-900">
+                            <i data-lucide="zap" class="text-[#00ff9f] w-10 h-10"></i>
+                        </div>
+                    </div>
                 </div>
-            </a> 
-            <h1 class="text-3xl font-black tracking-tighter uppercase italic">Zero<span class="gradient-text text-shadow-glow">Drop</span></h1>
-            <p class="text-slate-400 text-xs font-bold uppercase tracking-[0.3em] mt-2">Privacy First - Zero Knowledge</p>
+                
+                <!-- Titolo Stylized -->
+                <h1 class="text-4xl font-black tracking-tighter uppercase italic leading-none">
+                    <span class="text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]">Zero</span><span class="gradient-text">Drop</span>
+                </h1>
+                
+                <!-- Tagline High-Tech -->
+                <p class="text-slate-500 text-[10px] font-black uppercase tracking-[0.5em] mt-5 opacity-70 group-hover:text-[#00ff9f] group-hover:opacity-100 transition-all duration-500">
+                    Privacy First <span class="text-[#00ff9f]/30 mx-1">—</span> Zero Knowledge
+                </p>
+            </a>
         </div>
 
         <!-- Main App Card -->
