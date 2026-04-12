@@ -1,7 +1,5 @@
 ![ZeroDrop Screenshot](assets/zerodrop-preview.png)
 
-# 🛡️ ZeroDrop - Condivisione File Zero-Knowledge
-
 **ZeroDrop** è uno strumento di trasferimento file open-source progettato per garantire la massima privacy e sicurezza. Creato da [TivuStream](https://tivustream.com), segue la filosofia "Privacy First" utilizzando crittografia end-to-end (E2EE) direttamente nel browser dell'utente.
 
 ## 🌟 Caratteristiche Principali
@@ -11,6 +9,7 @@
 -   **Autodistruzione**: I file vengono eliminati dal server immediatamente dopo il primo download o dopo 24 ore di inattività.
 -   **Privacy-Focused**: Nessun log degli indirizzi IP, nessun cookie di tracciamento e nessuna registrazione richiesta.
 -   **Rate Limiting**: Protezione integrata contro gli abusi (max 5 upload ogni 10 minuti per utente, basato su hash IP anonimizzato).
+-   **Interfaccia bilingue (IT/EN)**: Switch lingua integrato nell'interfaccia, con preferenza salvata localmente.
 -   **Interfaccia Moderna**: Design "Dark Glass" pulito e intuitivo, ottimizzato per desktop e mobile.
 -   **Compatibilità**: Funziona su qualsiasi hosting con supporto PHP (anche hosting condivisi).
 
@@ -28,6 +27,11 @@
 3.  Assicurati che la cartella `uploads/` abbia i permessi di scrittura (es. `chmod 755` o `777`).
 4.  (Opzionale) Carica il tuo logo come `logo-tivustream.png`.
 5.  Configura il tuo server web per puntare alla cartella del progetto.
+
+## 🌍 Lingua (IT/EN)
+
+-   Puoi cambiare lingua dall'interfaccia con il pulsante in alto a destra.
+-   Puoi anche forzare la lingua via URL aggiungendo `?lang=en` oppure `?lang=it`.
 
 ## 🔐 Sicurezza Consigliata (Cloudflare)
 
