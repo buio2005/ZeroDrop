@@ -63,6 +63,11 @@
 </head>
 <body class="min-h-screen flex flex-col items-center p-4 font-sans">
 
+    <button id="lang-toggle" type="button" class="fixed top-4 right-4 z-50 feature-box px-3 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest text-slate-200 hover:text-[#00ff9f] transition-colors flex items-center gap-2">
+        <i data-lucide="languages" class="w-4 h-4 text-[#00ff9f]"></i>
+        <span id="lang-toggle-text">IT</span>
+    </button>
+
     <div class="max-w-xl w-full my-auto">
         <!-- Logo Header -->
         <div class="text-center mb-12">
@@ -87,7 +92,7 @@
                 
                 <!-- Tagline High-Tech -->
                 <p class="text-slate-500 text-[10px] font-black uppercase tracking-[0.5em] mt-5 opacity-70 group-hover:text-[#00ff9f] group-hover:opacity-100 transition-all duration-500">
-                    Privacy First <span class="text-[#00ff9f]/30 mx-1">—</span> Zero Knowledge
+                    <span data-i18n="header.taglinePrefix">Privacy First</span> <span class="text-[#00ff9f]/30 mx-1">—</span> <span data-i18n="header.taglineSuffix">Zero Knowledge</span>
                 </p>
             </a>
         </div>
@@ -102,17 +107,17 @@
                         <div class="w-20 h-20 bg-[#00ff9f]/10 rounded-3xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-500 shadow-[0_0_30px_rgba(0,255,159,0.1)]">
                             <i data-lucide="upload-cloud" class="text-[#00ff9f] w-12 h-12 drop-shadow-[0_0_10px_rgba(0,255,159,0.5)]"></i>
                         </div>
-                        <p class="text-slate-200 text-xl font-bold tracking-tight">Carica un file</p>
-                        <p class="text-slate-500 text-sm mt-1">Trascina qui o clicca per sfogliare</p>
+                        <p class="text-slate-200 text-xl font-bold tracking-tight" data-i18n="upload.title">Carica un file</p>
+                        <p class="text-slate-500 text-sm mt-1" data-i18n="upload.subtitle">Trascina qui o clicca per sfogliare</p>
                         <div class="mt-5 flex items-center gap-2 px-4 py-1.5 bg-amber-500/10 text-amber-400 rounded-full text-[10px] font-black uppercase tracking-widest border border-amber-500/20">
-                            <i data-lucide="alert-circle" class="w-3.5 h-3.5"></i> Max 100MB
+                            <i data-lucide="alert-circle" class="w-3.5 h-3.5"></i> <span data-i18n="upload.maxSize">Max 100MB</span>
                         </div>
                     </div>
                 </div>
 
                 <div id="loading" class="text-center py-12">
                     <div class="inline-block animate-spin rounded-full h-12 w-12 border-[3px] border-[#00ff9f] border-t-transparent shadow-[0_0_15px_rgba(0,255,159,0.3)]"></div>
-                    <p class="text-base text-slate-300 mt-5 font-bold tracking-tight" id="status-text">Criptando con AES-256...</p>
+                    <p class="text-base text-slate-300 mt-5 font-bold tracking-tight" id="status-text" data-i18n="status.idle">Criptando con AES-256...</p>
                 </div>
 
                 <!-- Result Link -->
@@ -120,13 +125,13 @@
                     <div class="bg-[#00ff9f]/5 border border-[#00ff9f]/20 rounded-2xl p-5 flex items-start gap-4 shadow-[0_0_20px_rgba(0,255,159,0.05)]">
                         <i data-lucide="check-circle" class="text-[#00ff9f] w-6 h-6 mt-0.5"></i>
                         <div>
-                            <p class="text-[#00ff9f] font-bold text-sm">Pronto per la condivisione!</p>
-                            <p class="text-slate-400 text-xs mt-1">Il file è stato criptato con successo nel tuo browser.</p>
+                            <p class="text-[#00ff9f] font-bold text-sm" data-i18n="result.readyTitle">Pronto per la condivisione!</p>
+                            <p class="text-slate-400 text-xs mt-1" data-i18n="result.readySubtitle">Il file è stato criptato con successo nel tuo browser.</p>
                         </div>
                     </div>
                     
                     <div class="space-y-2.5">
-                        <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Link di download unico</label>
+                        <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1" data-i18n="result.linkLabel">Link di download unico</label>
                         <div class="flex gap-3">
                             <input type="text" id="share-url" readonly class="flex-1 bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-sm text-[#00ff9f] font-medium focus:outline-none focus:border-[#00ff9f]/30 transition-colors">
                             <button onclick="copyLink()" class="btn-main text-black px-6 rounded-2xl hover:scale-105 transition-all active:scale-95 shadow-[0_0_20px_rgba(0,255,159,0.2)]">
@@ -138,7 +143,7 @@
                     <div class="bg-rose-500/5 border border-rose-500/20 rounded-2xl p-4 text-center">
                         <p class="text-[10px] text-rose-400 font-black uppercase tracking-widest">
                             <i data-lucide="zap" class="w-3.5 h-3.5 inline mr-1.5 align-text-bottom"></i> 
-                            Il file verrà eliminato subito dopo il download!
+                            <span data-i18n="result.autodelete">Il file verrà eliminato subito dopo il download!</span>
                         </p>
                     </div>
                 </div>
@@ -150,13 +155,13 @@
                     <div class="bg-rose-500/10 w-20 h-20 rounded-[2rem] flex items-center justify-center mx-auto mb-6 shadow-[0_0_30px_rgba(244,63,94,0.1)]">
                         <i data-lucide="file-lock" class="text-rose-500 w-10 h-10 drop-shadow-[0_0_8px_rgba(244,63,94,0.5)]"></i>
                     </div>
-                    <h3 id="file-name" class="font-bold text-2xl text-white tracking-tight truncate px-4">File protetto</h3>
+                    <h3 id="file-name" class="font-bold text-2xl text-white tracking-tight truncate px-4" data-i18n="download.protected">File protetto</h3>
                     <p id="file-size" class="text-slate-500 mt-2 font-bold uppercase tracking-widest text-[11px]">-</p>
                 </div>
                 <button id="download-btn" class="w-full btn-main py-5 rounded-[2rem] font-black text-lg hover:scale-[1.02] transition-all shadow-[0_0_30px_rgba(0,255,159,0.3)] flex items-center justify-center gap-4 active:scale-[0.98]">
-                    <i data-lucide="unlock" class="w-7 h-7"></i> Decripta e Scarica
+                    <i data-lucide="unlock" class="w-7 h-7"></i> <span id="download-btn-text" data-i18n="download.button">Decripta e Scarica</span>
                 </button>
-                <p class="text-[10px] text-slate-500 italic font-medium">Operazione locale: la chiave non esce dal dispositivo verso il server.</p>
+                <p class="text-[10px] text-slate-500 italic font-medium" data-i18n="download.localNote">Operazione locale: la chiave non esce dal dispositivo verso il server.</p>
             </div>
         </div>
 
@@ -167,50 +172,50 @@
                     <div class="p-2.5 bg-[#00ff9f]/10 rounded-xl group-hover:scale-110 transition-transform">
                         <i data-lucide="binary" class="w-5 h-5 text-[#00ff9f]"></i>
                     </div>
-                    <h3 class="font-black text-slate-200 text-sm tracking-widest uppercase">Crittografia E2EE</h3>
+                    <h3 class="font-black text-slate-200 text-sm tracking-widest uppercase" data-i18n="feature.e2ee.title">Crittografia E2EE</h3>
                 </div>
-                <p class="text-xs text-slate-500 leading-relaxed font-medium">I file vengono criptati con AES-256-GCM direttamente sul tuo dispositivo. La chiave non lascia mai il browser.</p>
+                <p class="text-xs text-slate-500 leading-relaxed font-medium" data-i18n="feature.e2ee.desc">I file vengono criptati con AES-256-GCM direttamente sul tuo dispositivo. La chiave non lascia mai il browser.</p>
             </div>
             <div class="feature-box p-7 rounded-[2rem] group">
                 <div class="flex items-center gap-4 mb-3">
                     <div class="p-2.5 bg-[#00ff9f]/10 rounded-xl group-hover:scale-110 transition-transform">
                         <i data-lucide="ghost" class="w-5 h-5 text-[#00ff9f]"></i>
                     </div>
-                    <h3 class="font-black text-slate-200 text-sm tracking-widest uppercase">Zero-Knowledge</h3>
+                    <h3 class="font-black text-slate-200 text-sm tracking-widest uppercase" data-i18n="feature.zk.title">Zero-Knowledge</h3>
                 </div>
-                <p class="text-xs text-slate-500 leading-relaxed font-medium">Il server riceve solo dati cifrati. Non conosce il contenuto, il nome o il tipo di file inviato.</p>
+                <p class="text-xs text-slate-500 leading-relaxed font-medium" data-i18n="feature.zk.desc">Il server riceve solo dati cifrati. Non conosce il contenuto, il nome o il tipo di file inviato.</p>
             </div>
             <div class="feature-box p-7 rounded-[2rem] group">
                 <div class="flex items-center gap-4 mb-3">
                     <div class="p-2.5 bg-[#00ff9f]/10 rounded-xl group-hover:scale-110 transition-transform">
                         <i data-lucide="trash-2" class="w-5 h-5 text-[#00ff9f]"></i>
                     </div>
-                    <h3 class="font-black text-slate-200 text-sm tracking-widest uppercase">Autodistruzione</h3>
+                    <h3 class="font-black text-slate-200 text-sm tracking-widest uppercase" data-i18n="feature.selfdestruct.title">Autodistruzione</h3>
                 </div>
-                <p class="text-xs text-slate-500 leading-relaxed font-medium">Dati effimeri: eliminazione immediata post-download o dopo 24 ore di inattività sul server.</p>
+                <p class="text-xs text-slate-500 leading-relaxed font-medium" data-i18n="feature.selfdestruct.desc">Dati effimeri: eliminazione immediata post-download o dopo 24 ore di inattività sul server.</p>
             </div>
             <div class="feature-box p-7 rounded-[2rem] group">
                 <div class="flex items-center gap-4 mb-3">
                     <div class="p-2.5 bg-[#00ff9f]/10 rounded-xl group-hover:scale-110 transition-transform">
                         <i data-lucide="eye-off" class="w-5 h-5 text-[#00ff9f]"></i>
                     </div>
-                    <h3 class="font-black text-slate-200 text-sm tracking-widest uppercase">No Tracciamento</h3>
+                    <h3 class="font-black text-slate-200 text-sm tracking-widest uppercase" data-i18n="feature.notrack.title">No Tracciamento</h3>
                 </div>
-                <p class="text-xs text-slate-500 leading-relaxed font-medium">Nessun cookie di profilazione e nessun log dell'indirizzo IP. La tua privacy è garantita al 100%.</p>
+                <p class="text-xs text-slate-500 leading-relaxed font-medium" data-i18n="feature.notrack.desc">Nessun cookie di profilazione e nessun log dell'indirizzo IP. La tua privacy è garantita al 100%.</p>
             </div>
         </div>
 
         <!-- Footer Links -->
         <footer class="text-center space-y-8 pb-10">
             <div class="flex flex-wrap justify-center gap-x-10 gap-y-4">
-                <a href="/" class="text-[10px] font-black text-slate-500 hover:text-[#00ff9f] uppercase tracking-[0.2em] transition-all">Home</a>
-                <a href="/privacy.html" class="text-[10px] font-black text-slate-500 hover:text-[#00ff9f] uppercase tracking-[0.2em] transition-all">Privacy</a>
+                <a href="/" class="text-[10px] font-black text-slate-500 hover:text-[#00ff9f] uppercase tracking-[0.2em] transition-all" data-i18n="footer.home">Home</a>
+                <a href="/privacy.html" class="text-[10px] font-black text-slate-500 hover:text-[#00ff9f] uppercase tracking-[0.2em] transition-all" data-i18n="footer.privacy">Privacy</a>
                 <a href="/tos.html" class="text-[10px] font-black text-slate-500 hover:text-[#00ff9f] uppercase tracking-[0.2em] transition-all">ToS</a>
-                <a href="/contatti" class="text-[10px] font-black text-slate-500 hover:text-[#00ff9f] uppercase tracking-[0.2em] transition-all">Contatti</a>
+                <a href="/contatti" class="text-[10px] font-black text-slate-500 hover:text-[#00ff9f] uppercase tracking-[0.2em] transition-all" data-i18n="footer.contacts">Contatti</a>
             </div>
             <div class="pt-8 border-t border-white/5">
                 <p class="text-[9px] text-slate-500 font-bold tracking-[0.3em] uppercase">
-                    ZeroDrop è un Progetto <a href="https://tivustream.com" class="text-[#00ff9f] hover:underline shadow-glow">TivuStream</a> - Privacy First System
+                    <span data-i18n="footer.projectPrefix">ZeroDrop è un Progetto</span> <a href="https://tivustream.com" class="text-[#00ff9f] hover:underline shadow-glow">TivuStream</a> <span data-i18n="footer.projectSuffix">- Privacy First System</span>
                 </p>
             </div>
         </footer>
@@ -218,6 +223,95 @@
 
     <script>
         lucide.createIcons();
+
+        const I18N = {
+            it: {
+                "meta.title": "ZeroDrop - Condividi in Sicurezza",
+                "header.taglinePrefix": "Privacy First",
+                "header.taglineSuffix": "Zero Knowledge",
+                "upload.title": "Carica un file",
+                "upload.subtitle": "Trascina qui o clicca per sfogliare",
+                "upload.maxSize": "Max 100MB",
+                "status.idle": "Criptando con AES-256...",
+                "status.keyGen": "Generazione chiave AES-256...",
+                "status.encryptLocal": "Criptando il file localmente...",
+                "status.uploading": "Caricamento in corso...",
+                "result.readyTitle": "Pronto per la condivisione!",
+                "result.readySubtitle": "Il file è stato criptato con successo nel tuo browser.",
+                "result.linkLabel": "Link di download unico",
+                "result.autodelete": "Il file verrà eliminato subito dopo il download!",
+                "download.protected": "File protetto",
+                "download.button": "Decripta e Scarica",
+                "download.localNote": "Operazione locale: la chiave non esce dal dispositivo verso il server.",
+                "download.downloading": "Scaricamento...",
+                "download.done": "Completato!",
+                "feature.e2ee.title": "Crittografia E2EE",
+                "feature.e2ee.desc": "I file vengono criptati con AES-256-GCM direttamente sul tuo dispositivo. La chiave non lascia mai il browser.",
+                "feature.zk.title": "Zero-Knowledge",
+                "feature.zk.desc": "Il server riceve solo dati cifrati. Non conosce il contenuto, il nome o il tipo di file inviato.",
+                "feature.selfdestruct.title": "Autodistruzione",
+                "feature.selfdestruct.desc": "Dati effimeri: eliminazione immediata post-download o dopo 24 ore di inattività sul server.",
+                "feature.notrack.title": "No Tracciamento",
+                "feature.notrack.desc": "Nessun cookie di profilazione e nessun log dell'indirizzo IP. La tua privacy è garantita al 100%.",
+                "footer.home": "Home",
+                "footer.privacy": "Privacy",
+                "footer.contacts": "Contatti",
+                "footer.projectPrefix": "ZeroDrop è un Progetto",
+                "footer.projectSuffix": "- Privacy First System",
+                "alert.fileTooLarge": "Il file supera il limite di 100MB consentito da Cloudflare.",
+                "alert.serverInvalid": "Il server ha risposto in modo non valido. Verifica i permessi della cartella 'uploads'.",
+                "alert.uploadError": "Errore upload",
+                "alert.errorPrefix": "Errore: ",
+                "alert.linkCopied": "Link copiato!",
+                "alert.fileExpired": "File scaduto o già scaricato.",
+                "alert.decryptError": "Errore decrittografia.",
+                "alert.fileUnavailable": "File non disponibile",
+                "lang.switchTitle": "Switch to English"
+            },
+            en: {
+                "meta.title": "ZeroDrop - Share securely",
+                "header.taglinePrefix": "Privacy First",
+                "header.taglineSuffix": "Zero Knowledge",
+                "upload.title": "Upload a file",
+                "upload.subtitle": "Drag & drop here or click to browse",
+                "upload.maxSize": "Max 100MB",
+                "status.idle": "Encrypting with AES-256...",
+                "status.keyGen": "Generating AES-256 key...",
+                "status.encryptLocal": "Encrypting locally...",
+                "status.uploading": "Uploading...",
+                "result.readyTitle": "Ready to share!",
+                "result.readySubtitle": "Your file was encrypted successfully in your browser.",
+                "result.linkLabel": "Unique download link",
+                "result.autodelete": "File will be deleted right after download!",
+                "download.protected": "Protected file",
+                "download.button": "Decrypt & Download",
+                "download.localNote": "Local operation: the key never leaves your device.",
+                "download.downloading": "Downloading...",
+                "download.done": "Done!",
+                "feature.e2ee.title": "E2EE Encryption",
+                "feature.e2ee.desc": "Files are encrypted with AES-256-GCM on your device. The key never leaves your browser.",
+                "feature.zk.title": "Zero-Knowledge",
+                "feature.zk.desc": "The server only receives encrypted data. It does not know the content, name, or type of the file.",
+                "feature.selfdestruct.title": "Self-Destruct",
+                "feature.selfdestruct.desc": "Ephemeral data: deleted immediately after download or after 24 hours of inactivity on the server.",
+                "feature.notrack.title": "No Tracking",
+                "feature.notrack.desc": "No tracking cookies and no IP address logging. Your privacy is protected.",
+                "footer.home": "Home",
+                "footer.privacy": "Privacy",
+                "footer.contacts": "Contacts",
+                "footer.projectPrefix": "ZeroDrop is a project by",
+                "footer.projectSuffix": "- Privacy First System",
+                "alert.fileTooLarge": "This file exceeds the 100MB Cloudflare limit.",
+                "alert.serverInvalid": "Invalid server response. Please check the 'uploads' folder permissions.",
+                "alert.uploadError": "Upload error",
+                "alert.errorPrefix": "Error: ",
+                "alert.linkCopied": "Link copied!",
+                "alert.fileExpired": "File expired or already downloaded.",
+                "alert.decryptError": "Decryption error.",
+                "alert.fileUnavailable": "File not available",
+                "lang.switchTitle": "Passa a Italiano"
+            }
+        };
 
         const apiEndpoint = 'api.php';
         const uploadView = document.getElementById('upload-view');
@@ -228,10 +322,54 @@
         const statusText = document.getElementById('status-text');
         const resultLink = document.getElementById('result-link');
         const shareUrl = document.getElementById('share-url');
+        const downloadBtnText = document.getElementById('download-btn-text');
+        const langToggle = document.getElementById('lang-toggle');
+        const langToggleText = document.getElementById('lang-toggle-text');
 
         const urlParams = new URLSearchParams(window.location.search);
         const fileId = urlParams.get('id');
         const encryptionKey = window.location.hash.substring(1);
+
+        let currentLang = 'it';
+        const qsLang = (urlParams.get('lang') || '').toLowerCase();
+        const storedLang = (localStorage.getItem('zerodrop_lang') || '').toLowerCase();
+        const browserLang = (navigator.language || '').toLowerCase();
+        if (qsLang === 'it' || qsLang === 'en') {
+            currentLang = qsLang;
+        } else if (storedLang === 'it' || storedLang === 'en') {
+            currentLang = storedLang;
+        } else if (browserLang.startsWith('it')) {
+            currentLang = 'it';
+        } else {
+            currentLang = 'en';
+        }
+
+        function t(key) {
+            return (I18N[currentLang] && I18N[currentLang][key]) || (I18N.it && I18N.it[key]) || key;
+        }
+
+        function applyI18n() {
+            document.documentElement.lang = currentLang;
+            document.title = t('meta.title');
+            if (langToggleText) langToggleText.textContent = currentLang.toUpperCase();
+            if (langToggle) langToggle.title = t('lang.switchTitle');
+            document.querySelectorAll('[data-i18n]').forEach((el) => {
+                const key = el.getAttribute('data-i18n');
+                el.textContent = t(key);
+            });
+            statusText.textContent = t('status.idle');
+            if (downloadBtnText) downloadBtnText.textContent = t('download.button');
+        }
+
+        if (langToggle) {
+            langToggle.addEventListener('click', () => {
+                currentLang = currentLang === 'it' ? 'en' : 'it';
+                localStorage.setItem('zerodrop_lang', currentLang);
+                applyI18n();
+            });
+        }
+
+        applyI18n();
 
         if (fileId && encryptionKey) {
             showDownloadView(fileId, encryptionKey);
@@ -250,19 +388,19 @@
         async function handleFile(file) {
             if (!file) return;
             if (file.size > 100 * 1024 * 1024) {
-                alert("Il file supera il limite di 100MB consentito da Cloudflare.");
+                alert(t('alert.fileTooLarge'));
                 return;
             }
             dropZone.classList.add('hidden');
             loading.style.display = 'block';
             
             try {
-                statusText.innerText = "Generazione chiave AES-256...";
+                statusText.innerText = t('status.keyGen');
                 const key = await crypto.subtle.generateKey({ name: "AES-GCM", length: 256 }, true, ["encrypt", "decrypt"]);
                 const exportedKey = await crypto.subtle.exportKey("jwk", key);
                 const keyBase64 = btoa(JSON.stringify(exportedKey));
 
-                statusText.innerText = "Criptando il file localmente...";
+                statusText.innerText = t('status.encryptLocal');
                 const iv = crypto.getRandomValues(new Uint8Array(12));
                 const fileBuffer = await file.arrayBuffer();
                 const encryptedBuffer = await crypto.subtle.encrypt({ name: "AES-GCM", iv: iv }, key, fileBuffer);
@@ -273,7 +411,7 @@
                 formData.append('name', file.name);
                 formData.append('type', file.type);
 
-                statusText.innerText = "Caricamento in corso...";
+                statusText.innerText = t('status.uploading');
                 const res = await fetch(`${apiEndpoint}?action=upload`, { method: 'POST', body: formData });
                 const text = await res.text();
                 
@@ -282,7 +420,7 @@
                     data = JSON.parse(text);
                 } catch (e) {
                     console.error("Server response was not JSON:", text);
-                    throw new Error("Il server ha risposto in modo non valido. Verifica i permessi della cartella 'uploads'.");
+                    throw new Error(t('alert.serverInvalid'));
                 }
 
                 if (data.id) {
@@ -291,10 +429,10 @@
                     const finalLink = `${window.location.origin}${window.location.pathname}?id=${data.id}#${keyBase64}`;
                     shareUrl.value = finalLink;
                 } else {
-                    throw new Error(data.error || "Errore upload");
+                    throw new Error(data.error || t('alert.uploadError'));
                 }
             } catch (err) {
-                alert("Errore: " + err.message);
+                alert(t('alert.errorPrefix') + err.message);
                 dropZone.classList.remove('hidden');
                 loading.style.display = 'none';
             }
@@ -303,7 +441,7 @@
         function copyLink() {
             shareUrl.select();
             document.execCommand('copy');
-            alert("Link sicuro copiato!");
+            alert(t('alert.linkCopied'));
         }
 
         async function showDownloadView(id, keyBase64) {
@@ -326,7 +464,7 @@
                 document.getElementById('file-size').innerText = (info.size / 1024 / 1024).toFixed(2) + " MB";
                 document.getElementById('download-btn').onclick = () => downloadAndDecrypt(id, keyBase64, info.name);
             } catch (err) {
-                alert("File scaduto o già scaricato.");
+                alert(t('alert.fileExpired'));
                 window.location.href = window.location.pathname;
             }
         }
@@ -334,11 +472,11 @@
         async function downloadAndDecrypt(id, keyBase64, originalName) {
             const btn = document.getElementById('download-btn');
             btn.disabled = true;
-            btn.innerText = "Scaricamento...";
+            if (downloadBtnText) downloadBtnText.textContent = t('download.downloading');
 
             try {
                 const res = await fetch(`${apiEndpoint}?action=download&id=${id}`);
-                if (!res.ok) throw new Error("File non disponibile");
+                if (!res.ok) throw new Error(t('alert.fileUnavailable'));
                 const buffer = await res.arrayBuffer();
                 const iv = buffer.slice(0, 12);
                 const data = buffer.slice(12);
@@ -351,10 +489,10 @@
                 a.href = url;
                 a.download = originalName;
                 a.click();
-                btn.innerText = "Completato!";
+                if (downloadBtnText) downloadBtnText.textContent = t('download.done');
                 setTimeout(() => window.location.href = window.location.pathname, 2000);
             } catch (err) {
-                alert("Errore decrittografia.");
+                alert(t('alert.decryptError'));
                 window.location.href = window.location.pathname;
             }
         }
