@@ -1,52 +1,58 @@
 ![ZeroDrop Screenshot](assets/zerodrop-preview.png)
 
-**ZeroDrop** è uno strumento di trasferimento file open-source progettato per garantire la massima privacy e sicurezza. Creato da [TivuStream](https://tivustream.com), segue la filosofia "Privacy First" utilizzando crittografia end-to-end (E2EE) direttamente nel browser dell'utente.
+**🌐 English** · [🇮🇹 Italiano](README.it.md)
 
-## 🌟 Caratteristiche Principali
+**ZeroDrop** is an open-source file transfer tool built for maximum privacy and
+security. Created by [TivuStream](https://tivustream.com), it follows a "Privacy
+First" philosophy, using end-to-end encryption (E2EE) directly in the user's
+browser.
 
--   **Crittografia E2EE (AES-256-GCM)**: I file vengono criptati localmente prima dell'invio. La chiave non lascia mai il dispositivo dell'utente.
--   **Zero-Knowledge**: Il server riceve solo dati cifrati (blob) e non ha alcuna conoscenza del contenuto, del nome o del tipo di file.
--   **Autodistruzione**: I file vengono eliminati dal server immediatamente dopo il primo download o dopo 24 ore di inattività.
--   **Privacy-Focused**: Nessun log degli indirizzi IP, nessun cookie di tracciamento e nessuna registrazione richiesta.
--   **Rate Limiting**: Protezione integrata contro gli abusi (max 5 upload ogni 10 minuti per utente, basato su hash IP anonimizzato).
--   **Interfaccia bilingue (IT/EN)**: Switch lingua integrato nell'interfaccia, con preferenza salvata localmente.
--   **Interfaccia Moderna**: Design "Dark Glass" pulito e intuitivo, ottimizzato per desktop e mobile.
--   **Compatibilità**: Funziona su qualsiasi hosting con supporto PHP (anche hosting condivisi).
+## 🌟 Key features
 
-## 🛠️ Come Funziona (Per i Tecnici)
+-   **E2EE encryption (AES-256-GCM)**: files are encrypted locally before being sent. The key never leaves the user's device.
+-   **Zero-knowledge**: the server only ever receives encrypted blobs, and knows nothing about the content, name or type of the file.
+-   **Self-destruct**: files are deleted from the server immediately after the first download, or after 24 hours of inactivity.
+-   **Privacy-focused**: no IP address logging, no tracking cookies, no sign-up required.
+-   **Rate limiting**: built-in abuse protection (max 5 uploads per 10 minutes per user, based on an anonymised IP hash).
+-   **Bilingual interface (IT/EN)**: language switch built into the interface, with the preference saved locally.
+-   **Modern interface**: a clean, intuitive "Dark Glass" design, optimised for desktop and mobile.
+-   **Compatibility**: runs on any hosting with PHP support, shared hosting included.
 
-1.  **Generazione Chiave**: Il browser genera una chiave AES-GCM a 256 bit casuale tramite le `Web Crypto API`.
-2.  **Cifratura**: Il file viene cifrato localmente con un IV (Initialization Vector) di 12 byte.
-3.  **Fragment Identifier**: La chiave viene inclusa nel link dopo il simbolo `#`. Poiché il fragment identifier non viene mai inviato al server, la chiave rimane un segreto tra il mittente e il destinatario.
-4.  **Effimerità**: Il backend PHP gestisce la ricezione dei blob e si occupa della pulizia automatica (cleanup) dei file scaduti.
+## 🛠️ How it works (for the technically minded)
 
-## 🚀 Installazione Rapida
+1.  **Key generation**: the browser generates a random 256-bit AES-GCM key through the `Web Crypto API`.
+2.  **Encryption**: the file is encrypted locally with a 12-byte IV (initialization vector).
+3.  **Fragment identifier**: the key is appended to the link after the `#` symbol. Since the fragment identifier is never sent to the server, the key stays a secret between sender and recipient.
+4.  **Ephemerality**: the PHP backend handles incoming blobs and takes care of automatically cleaning up expired files.
 
-1.  Clona la repository sul tuo server o scarica i file.
-2.  Crea una cartella `uploads/` nella root del progetto.
-3.  Assicurati che la cartella `uploads/` abbia i permessi di scrittura (es. `chmod 755` o `777`).
-4.  (Opzionale) Carica il tuo logo come `logo-tivustream.png`.
-5.  Configura il tuo server web per puntare alla cartella del progetto.
+## 🚀 Quick install
 
-## 🌍 Lingua (IT/EN)
+1.  Clone the repository onto your server, or download the files.
+2.  Create an `uploads/` folder in the project root.
+3.  Make sure the `uploads/` folder is writable (e.g. `chmod 755` or `777`).
+4.  (Optional) Upload your own logo as `logo-tivustream.png`.
+5.  Point your web server at the project folder.
 
--   Puoi cambiare lingua dall'interfaccia con il pulsante in alto a destra.
--   Puoi anche forzare la lingua via URL aggiungendo `?lang=en` oppure `?lang=it`.
+## 🌍 Language (IT/EN)
 
-## 🔐 Sicurezza Consigliata (Cloudflare)
+-   You can switch language from the interface, using the button in the top right corner.
+-   You can also force a language through the URL by adding `?lang=en` or `?lang=it`.
 
-Se utilizzi Cloudflare, ti consigliamo di:
--   Impostare il **Security Level** su "Automated" o "Medium".
--   Creare una **Cache Rule** per fare il bypass della cache sulla cartella `uploads/`.
--   Il limite massimo di upload per i piani free è di 100MB.
+## 🔐 Recommended security setup (Cloudflare)
 
-## 📄 Licenza
+If you use Cloudflare, we recommend that you:
+-   Set the **Security Level** to "Automated" or "Medium".
+-   Create a **Cache Rule** to bypass the cache on the `uploads/` folder.
+-   Note that the maximum upload size on free plans is 100 MB.
 
-Questo progetto è distribuito sotto licenza **MIT**. Consulta il file `LICENSE` per maggiori dettagli.
+## 📄 License
 
-## 🤝 Contribuire
+This project is released under the **MIT** license. See the `LICENSE` file for details.
 
-Siamo aperti a pull request e suggerimenti! Se trovi un bug o hai un'idea per una nuova funzionalità, apri un'issue o invia una PR.
+## 🤝 Contributing
+
+Pull requests and suggestions are welcome. If you find a bug or have an idea for
+a new feature, open an issue or send a PR.
 
 ---
-Progetto a cura di [TivuStream](https://tivustream.com) - *Privacy First System*
+A project by [TivuStream](https://tivustream.com) - *Privacy First System*
