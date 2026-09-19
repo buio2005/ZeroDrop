@@ -1,0 +1,48 @@
+name: Segnala un problema / Report a bug
+description: Segnala un bug o un malfunzionamento / Report a bug or malfunction
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Grazie per la segnalazione. Puoi scrivere in italiano o in inglese. Non inserire dati personali, password, chiavi o log non ripuliti. Rispondo quando posso, senza tempi garantiti.
+
+        Thanks for the report. You can write in Italian or English. Do not include personal data, passwords, keys or unredacted logs. I reply when I can, with no guaranteed timeframe.
+  - type: input
+    id: strumento
+    attributes:
+      label: Software o strumento / Software or tool
+      description: Nome e, se la conosci, versione. / Name and, if known, version.
+      placeholder: "DeskStamp 1.2"
+    validations:
+      required: true
+  - type: input
+    id: sistema
+    attributes:
+      label: Sistema operativo e browser / Operating system and browser
+      placeholder: "Windows 11, Firefox"
+    validations:
+      required: true
+  - type: textarea
+    id: cosa-succede
+    attributes:
+      label: Cosa è successo / What happened
+      description: Descrivi il problema, con eventuali messaggi di errore. / Describe the problem, including any error messages.
+    validations:
+      required: true
+  - type: textarea
+    id: passaggi
+    attributes:
+      label: Come riprodurlo / Steps to reproduce
+      placeholder: |
+        1. ...
+        2. ...
+    validations:
+      required: true
+  - type: textarea
+    id: atteso
+    attributes:
+      label: Cosa ti aspettavi / What you expected
+    validations:
+      required: false
